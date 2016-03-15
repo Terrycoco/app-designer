@@ -74,6 +74,7 @@ class ColorForm extends Component {
     this.callRemove = this.callRemove.bind(this);
     this.callSelect = this.callSelect.bind(this);
     this.callClone = this.callClone.bind(this);
+    this.callLock = this.callLock.bind(this);
   }
   callChange(e) {
     let val = e.target.value;
@@ -94,8 +95,10 @@ class ColorForm extends Component {
     this.props.handleRemove(this.props.idx);
   }
   callClone(e) {
-    console.log('got here');
     this.props.handleClone(this.props.idx);
+  }
+  callLock(e){
+    this.props.onLock(this.props.idx);
   }
   selectField(e) {
     e.target.select();
@@ -114,6 +117,9 @@ class ColorForm extends Component {
       <div style={styles.container}>
         <div style={merge(styles.colorBlock, {background: bg, color: textcolor})} onClick={this.callSelect}>
               <div style={merge(styles.swatchMenu, {background: menubar, color: textcolor})}>
+              <span style={merge(styles.clone, {color: textcolor})}
+                    className={(this.props.isLocked) ? "fa fa-lock" : "fa fa-unlock"}
+                    onClick={this.callLock}></span>
                   <span style={styles.swatchTitle}>Color {this.props.idx}</span>
 
                   <span style={merge(styles.X, {color: textcolor})} onClick={this.callRemove} >x</span>

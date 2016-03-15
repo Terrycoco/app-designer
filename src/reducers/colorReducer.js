@@ -1,4 +1,4 @@
-import { ADD_COLOR, REMOVE_COLOR, ALTER_COLOR, SELECT_COLOR, CLONE_COLOR} from 'actions/index';
+import { ADD_COLOR, REMOVE_COLOR, ALTER_COLOR, SELECT_COLOR, CLONE_COLOR, TOGGLE_LOCK} from 'actions/index';
 import Color from 'utils/Color';
 
 const INITIAL_STATE = {
@@ -12,7 +12,7 @@ export default (state=INITIAL_STATE, action) => {
     case ADD_COLOR: {
       let newarr = state.palette.slice(0);
       const newclr = new Color('black');
-      const newobj = {colorObj: newclr, hexInput: newclr.hex, colornameInput: newclr.colorname};
+      const newobj = {colorObj: newclr, hexInput: newclr.hex, colornameInput: newclr.colorname, isLocked: false};
       newarr.push(newobj);
       return Object.assign({}, state, {palette: newarr});
     }
@@ -34,13 +34,15 @@ export default (state=INITIAL_STATE, action) => {
         newobj = {
           colorObj: newclr,
           hexInput: newclr.hex,
-          colornameInput: newclr.colorname
+          colornameInput: newclr.colorname,
+          isLocked: false
         }
       } else {
         newobj = {
           colorObj: origclr,
           hexInput: (action.payload.channel === "hex") ? action.payload.newval : origclr.hex,
-          colornameInput: (action.payload.channel === "colorname") ? action.payload.newval : ''
+          colornameInput: (action.payload.channel === "colorname") ? action.payload.newval : '',
+          isLocked: false
         }
       }
 
@@ -57,8 +59,15 @@ export default (state=INITIAL_STATE, action) => {
       let newarr = state.palette.slice(0);
       let origclr = newarr[idx].colorObj;
       let newclr = origclr.clone();
-      const newobj = {colorObj: newclr, hexInput: newclr.hex, colornameInput: newclr.colorname};
+      const newobj = {colorObj: newclr, hexInput: newclr.hex, colornameInput: newclr.colorname, isLocked: false};
       newarr.push(newobj);
+      return Object.assign({}, state, {palette: newarr});
+    }
+
+    case TOGGLE_LOCK: {
+      const idx = action.payload;
+      let newarr = state.palette.slice(0);
+      newarr[idx].isLocked = !newarr[idx].isLocked;
       return Object.assign({}, state, {palette: newarr});
     }
 

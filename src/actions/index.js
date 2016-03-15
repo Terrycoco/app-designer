@@ -66,6 +66,15 @@ export function cloneColor(idx) {
     payload: idx
   };
 }
+
+export const TOGGLE_LOCK = 'TOGGLE_LOCK';
+export function toggleLock(idx) {
+  return {
+    type: TOGGLE_LOCK,
+    payload: idx
+  };
+}
+
 export const SET_BACKGROUND = "SET_BACKGROUND";
 export function setBackground(idx, colorstring) {
   return {

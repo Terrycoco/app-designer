@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ColorForm from 'components/ColorForm';
 import {connect} from 'react-redux';
 import {merge} from 'utils/shared';
-import {addColor, alterColor, removeColor, selectColor, cloneColor } from 'actions/index';
+import {addColor, alterColor, removeColor, selectColor, cloneColor, toggleLock } from 'actions/index';
 
 
 const styles = {
@@ -17,7 +17,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    backgroundColor: 'black'
   },
   form: {
     flex: 1,
@@ -33,6 +34,7 @@ class Designer extends Component {
     this.handleRemove = this.handleRemove.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.handleClone = this.handleClone.bind(this);
+    this.handleLock = this.handleLock.bind(this);
   }
   shouldComponentUpdate() {
     return true;
@@ -49,6 +51,9 @@ class Designer extends Component {
   handleClone(idx) {
     this.props.cloneColor(idx);
   }
+  handleLock(idx) {
+    this.props.toggleLock(idx);
+  }
   onAdd() {
     this.props.addColor();
   }
@@ -61,6 +66,7 @@ class Designer extends Component {
       return (
           <li style={merge(styles.form, selectedStyle)} key={idx}>
             <ColorForm  key={idx}
+                        isLocked={item.isLocked}
                         colorObj={item.colorObj}
                         hexInput={item.hexInput}
                         colornameInput={item.colornameInput}
@@ -69,7 +75,9 @@ class Designer extends Component {
                         handleChange={this.changeValue}
                         handleRemove={this.handleRemove}
                         handleSelect={this.handleSelect}
-                        handleClone={this.handleClone} />
+                        handleClone={this.handleClone}
+                        onLock={this.handleLock}
+ />
           </li>
       );
     });
@@ -94,4 +102,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {addColor, alterColor, removeColor, selectColor, cloneColor})(Designer);
+export default connect(mapStateToProps, {addColor, alterColor, removeColor, selectColor, cloneColor, toggleLock})(Designer);

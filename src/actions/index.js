@@ -59,6 +59,13 @@ export function selectColor(idx) {
   };
 }
 
+export const CLONE_COLOR = 'CLONE_COLOR';
+export function cloneColor(idx) {
+  return {
+    type: CLONE_COLOR,
+    payload: idx
+  };
+}
 export const SET_BACKGROUND = "SET_BACKGROUND";
 export function setBackground(idx, colorstring) {
   return {

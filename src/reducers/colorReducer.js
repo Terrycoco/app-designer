@@ -1,4 +1,4 @@
-import { ADD_COLOR, REMOVE_COLOR, ALTER_COLOR, SELECT_COLOR} from 'actions/index';
+import { ADD_COLOR, REMOVE_COLOR, ALTER_COLOR, SELECT_COLOR, CLONE_COLOR} from 'actions/index';
 import Color from 'utils/Color';
 
 const INITIAL_STATE = {
@@ -50,6 +50,16 @@ export default (state=INITIAL_STATE, action) => {
     }
     case SELECT_COLOR: {
       return Object.assign({}, state, {selected: action.payload});
+    }
+
+    case CLONE_COLOR: {
+      const idx = action.payload;
+      let newarr = state.palette.slice(0);
+      let origclr = newarr[idx].colorObj;
+      let newclr = origclr.clone();
+      const newobj = {colorObj: newclr, hexInput: newclr.hex, colornameInput: newclr.colorname};
+      newarr.push(newobj);
+      return Object.assign({}, state, {palette: newarr});
     }
 
     default:

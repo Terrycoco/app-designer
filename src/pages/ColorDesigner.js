@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ColorForm from 'components/ColorForm';
 import {connect} from 'react-redux';
 import {merge} from 'utils/shared';
-import {addColor, alterColor, removeColor, selectColor } from 'actions/index';
+import {addColor, alterColor, removeColor, selectColor, cloneColor } from 'actions/index';
 
 
 const styles = {
@@ -32,6 +32,7 @@ class Designer extends Component {
     this.onAdd = this.onAdd.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleClone = this.handleClone.bind(this);
   }
   shouldComponentUpdate() {
     return true;
@@ -44,6 +45,9 @@ class Designer extends Component {
   }
   handleSelect(idx) {
     this.props.selectColor(idx);
+  }
+  handleClone(idx) {
+    this.props.cloneColor(idx);
   }
   onAdd() {
     this.props.addColor();
@@ -61,10 +65,11 @@ class Designer extends Component {
                         hexInput={item.hexInput}
                         colornameInput={item.colornameInput}
                         idx={idx}
+                        isSelected={(this.props.selected == idx)}
                         handleChange={this.changeValue}
                         handleRemove={this.handleRemove}
                         handleSelect={this.handleSelect}
-                        isSelected={(this.props.selected == idx)}/>
+                        handleClone={this.handleClone} />
           </li>
       );
     });
@@ -89,4 +94,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {addColor, alterColor, removeColor, selectColor})(Designer);
+export default connect(mapStateToProps, {addColor, alterColor, removeColor, selectColor, cloneColor})(Designer);

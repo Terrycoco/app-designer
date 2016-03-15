@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Slider from 'components/Slider';
 import Utils, { merge } from 'utils/shared';
 
+
 const styles = {
   container: {
     display: 'flex',
@@ -30,6 +31,8 @@ const styles = {
           fontWeight: 'bold',
           marginRight: '.5em'
         },
+        swatchEdit: {
+        },
         swatchTitle: {
           alignSelf: 'flex-start',
           fontSize: '.9em',
@@ -57,6 +60,9 @@ const styles = {
               backgroundColor: 'white',
               color: 'black',
               textAlign: 'center'
+          },
+          clone: {
+            marginLeft: '.5em'
           }
 };
 
@@ -67,6 +73,7 @@ class ColorForm extends Component {
     this.selectField = this.selectField.bind(this);
     this.callRemove = this.callRemove.bind(this);
     this.callSelect = this.callSelect.bind(this);
+    this.callClone = this.callClone.bind(this);
   }
   callChange(e) {
     let val = e.target.value;
@@ -86,6 +93,10 @@ class ColorForm extends Component {
   callRemove(e) {
     this.props.handleRemove(this.props.idx);
   }
+  callClone(e) {
+    console.log('got here');
+    this.props.handleClone(this.props.idx);
+  }
   selectField(e) {
     e.target.select();
   }
@@ -95,27 +106,19 @@ class ColorForm extends Component {
   componentWillReceiveProps(nextProps) {
   }
   render() {
-
       let alphanew = (this.props.colorObj.alpha - 0.25).toFixed(3);
-          console.log(alphanew);
-      let colorstyle = {
-      swatch: {
-        backgroundColor: `rgba(${this.props.colorObj.red}, ${this.props.colorObj.green}, ${this.props.colorObj.blue}, ${this.props.colorObj.alpha})`,
-        color: this.props.colorObj.textColor
-      },
-      menu: {
-        backgroundColor: `rgba(${this.props.colorObj.red}, ${this.props.colorObj.green}, ${this.props.colorObj.blue}, ${alphanew})`
-      }
-    }
+      let bg = `rgba(${this.props.colorObj.red}, ${this.props.colorObj.green}, ${this.props.colorObj.blue}, ${this.props.colorObj.alpha})`;
+      let textcolor =this.props.colorObj.textColor;
+      let menubar =  `rgba(${this.props.colorObj.red}, ${this.props.colorObj.green}, ${this.props.colorObj.blue}, ${alphanew})`;
     return (
-
       <div style={styles.container}>
-        <div style={merge(styles.colorBlock, colorstyle.swatch)} onClick={this.callSelect}>
-              <div style={merge(styles.swatchMenu, colorstyle.menu)}>
+        <div style={merge(styles.colorBlock, {background: bg, color: textcolor})} onClick={this.callSelect}>
+              <div style={merge(styles.swatchMenu, {background: menubar, color: textcolor})}>
                   <span style={styles.swatchTitle}>Color {this.props.idx}</span>
-                  <span style={merge(styles.X, {color: colorstyle.color})} onClick={this.callRemove} >x</span>
+
+                  <span style={merge(styles.X, {color: textcolor})} onClick={this.callRemove} >x</span>
               </div>
-              <div style={merge(styles.inputBlock, colorstyle.menu)} >
+              <div style={merge(styles.inputBlock, {background: menubar, color: textcolor})} >
                     <label style={styles.label}>Hex</label>
                     <input  style={styles.input}
                             key={'H' + this.props.idx}
@@ -134,6 +137,9 @@ class ColorForm extends Component {
                           value={this.props.colornameInput}
                           onChange={this.callChange}
                           onFocus = {this.selectField} />
+                    <span style={merge(styles.clone, {color: textcolor})}
+                          className="fa fa-arrow-right"
+                          onClick={this.callClone}></span>
                 </div>
           </div>
         <div>

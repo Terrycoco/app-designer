@@ -41,6 +41,7 @@ class Color {
     this.setChannel = this.setChannel.bind(this);
     this.colorname = colorString.to.keyword(this.rgb) || '';
     this.setBackgroundColor = this.setBackgroundColor.bind(this);
+    this.clone = this.clone.bind(this);
  }
 
 
@@ -119,6 +120,10 @@ class Color {
     newclr.backgroundColor = bg;
     newclr.textColor = this.setTextColor();
     return newclr;
+  }
+
+  clone() {
+    return new Color(this.rgb);
   }
 }
 

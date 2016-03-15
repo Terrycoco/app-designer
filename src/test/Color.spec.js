@@ -7,17 +7,17 @@ describe('color object', () => {
   //   let rgb =  clr.rgb;
   //   expect(clr instanceof Color).to.equal(true);
   // });
-  // it('returns a color object from rgb array', () => {
-  //   let clr = new Color([255, 255, 255]);
-  //   let rgb =  clr.rgb;
-  //   expect(rgb).to.eql([255, 255, 255,1]);
-  // });
-  it('returns the light value', () => {
-    let clr = new Color(255, 255, 255, .40);
-    clr.setBackgroundColor('black');
-    let light =  clr.light;
-    console.log('textcolor is:', clr.textColor);
+  it('returns a color object from rgb array', () => {
+    let clr = new Color([255, 255, 255, .5]);
+    let rgb =  clr.rgb;
+    expect(rgb).to.eql([255, 255, 255, .5]);
   });
+  // it('returns the light value', () => {
+  //   let clr = new Color(255, 255, 255, .40);
+  //   clr.setBackgroundColor('black');
+  //   let light =  clr.light;
+  //   console.log('textcolor is:', clr.textColor);
+  // });
   // it('returns textcolor', () => {
   //   let clr = new Color(255,255,255);
   //   console.log(clr.light);

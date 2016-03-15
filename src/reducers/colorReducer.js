@@ -1,11 +1,13 @@
-import { ADD_COLOR, REMOVE_COLOR, ALTER_COLOR } from 'actions/index';
+import { ADD_COLOR, REMOVE_COLOR, ALTER_COLOR, SELECT_COLOR} from 'actions/index';
 import Color from 'utils/Color';
 
 const INITIAL_STATE = {
-  palette: []
+  palette: [],
+  selected: 0
 };
 
 export default (state=INITIAL_STATE, action) => {
+  console.log('got to reducer action is:', action);
   switch (action.type) {
     case ADD_COLOR: {
       let newarr = state.palette.slice(0);
@@ -46,6 +48,10 @@ export default (state=INITIAL_STATE, action) => {
       return Object.assign({}, state, {palette: newarr});
 
     }
+    case SELECT_COLOR: {
+      return Object.assign({}, state, {selected: action.payload});
+    }
+
     default:
       return state;
   }

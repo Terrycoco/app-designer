@@ -8,7 +8,8 @@ const styles = {
     flexDirection: 'column',
     width:'auto',
     wrap: 'nowrap',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    fontFamily: 'Verdana, Arial, sans-serif'
   },
   colorBlock:{
     minHeight: '10em',
@@ -21,22 +22,28 @@ const styles = {
       width: '100%',
       display: 'flex',
       flexDirection: 'row',
-      backgroundColor: 'blue',
-      justifyContent: 'flex-end'
+      justifyContent: 'space-between'
     },
         X: {
-          fontFamily: 'sans-serif',
           alignSelf: 'flex-end',
           fontSize: '.9em',
           fontWeight: 'bold',
           marginRight: '.5em'
         },
+        swatchTitle: {
+          alignSelf: 'flex-start',
+          fontSize: '.9em',
+          marginLeft: '.5em'
+        },
     inputBlock: {
       alignSelf: 'flex-end',
+      paddingRight: '.5em',
+      paddingBottom: '.3em',
       width: '100%',
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'stretch'
+      justifyContent: 'stretch',
+      alignItems: 'center'
 
       },
             label: {
@@ -59,21 +66,25 @@ class ColorForm extends Component {
     this.callChange = this.callChange.bind(this);
     this.selectField = this.selectField.bind(this);
     this.callRemove = this.callRemove.bind(this);
+    this.callSelect = this.callSelect.bind(this);
   }
   callChange(e) {
     let val = e.target.value;
     if (e.target.name === "hex") {
-      Utils.debounce(this.props.onChange(this.props.idx, "hex", val), 1000);
+      Utils.debounce(this.props.handleChange(this.props.idx, "hex", val), 1000);
 
     } else if (e.target.name === "colorname") {
-      Utils.debounce(this.props.onChange(this.props.idx, "colorname", val), 1000);
+      Utils.debounce(this.props.handleChange(this.props.idx, "colorname", val), 1000);
     } else {
-      this.props.onChange(this.props.idx, e.target.name, val);
+      this.props.handleChange(this.props.idx, e.target.name, val);
     }
 
   }
+  callSelect(e) {
+    this.props.handleSelect(this.props.idx);
+  }
   callRemove(e) {
-    this.props.onRemove(this.props.idx);
+    this.props.handleRemove(this.props.idx);
   }
   selectField(e) {
     e.target.select();
@@ -84,18 +95,27 @@ class ColorForm extends Component {
   componentWillReceiveProps(nextProps) {
   }
   render() {
-    let colorstyle = {
-      backgroundColor: `rgba(${this.props.colorObj.red}, ${this.props.colorObj.green}, ${this.props.colorObj.blue}, ${this.props.colorObj.alpha})`,
-      color: this.props.colorObj.textColor
+
+      let alphanew = (this.props.colorObj.alpha - 0.25).toFixed(3);
+          console.log(alphanew);
+      let colorstyle = {
+      swatch: {
+        backgroundColor: `rgba(${this.props.colorObj.red}, ${this.props.colorObj.green}, ${this.props.colorObj.blue}, ${this.props.colorObj.alpha})`,
+        color: this.props.colorObj.textColor
+      },
+      menu: {
+        backgroundColor: `rgba(${this.props.colorObj.red}, ${this.props.colorObj.green}, ${this.props.colorObj.blue}, ${alphanew})`
+      }
     }
     return (
 
       <div style={styles.container}>
-        <div style={merge(styles.colorBlock, colorstyle)}>
-              <div style={styles.swatchMenu}>
-                  <span idx={this.props.idx} style={merge(styles.X, {color: colorstyle.color})} onClick={this.callRemove} >x</span>
+        <div style={merge(styles.colorBlock, colorstyle.swatch)} onClick={this.callSelect}>
+              <div style={merge(styles.swatchMenu, colorstyle.menu)}>
+                  <span style={styles.swatchTitle}>Color {this.props.idx}</span>
+                  <span style={merge(styles.X, {color: colorstyle.color})} onClick={this.callRemove} >x</span>
               </div>
-              <div style={styles.inputBlock} >
+              <div style={merge(styles.inputBlock, colorstyle.menu)} >
                     <label style={styles.label}>Hex</label>
                     <input  style={styles.input}
                             key={'H' + this.props.idx}
@@ -117,11 +137,11 @@ class ColorForm extends Component {
                 </div>
           </div>
         <div>
-           <Slider name="red" key={this.props.idx+'r'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.red} onChange={this.props.onChange} colorObj={this.props.colorObj}/>
-           <Slider name="green" key={this.props.idx+'g'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.green} onChange={this.props.onChange} colorObj={this.props.colorObj}/>
-           <Slider name="blue" key={this.props.idx+'b'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.blue} onChange={this.props.onChange} colorObj={this.props.colorObj}/>
-           <Slider name="light" key={this.props.idx+'l'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.light} onChange={this.props.onChange} colorObj={this.props.colorObj}/>
-          <Slider name="alpha" key={this.props.idx+'a'} idx={this.props.idx} min=".001" max="1" step=".001" value={this.props.colorObj.alpha} onChange={this.props.onChange} colorObj={this.props.colorObj}/>
+           <Slider name="red" key={this.props.idx+'r'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.red} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
+           <Slider name="green" key={this.props.idx+'g'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.green} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
+           <Slider name="blue" key={this.props.idx+'b'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.blue} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
+           <Slider name="light" key={this.props.idx+'l'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.light} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
+          <Slider name="alpha" key={this.props.idx+'a'} idx={this.props.idx} min=".001" max="1" step=".001" value={this.props.colorObj.alpha} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
         </div>
 
       </div>

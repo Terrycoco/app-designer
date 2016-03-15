@@ -1,25 +1,27 @@
 import React, {Component} from 'react';
 import ColorForm from 'components/ColorForm';
 import {connect} from 'react-redux';
-import {addColor, alterColor, removeColor} from 'actions/index';
+import {merge} from 'utils/shared';
+import {addColor, alterColor, removeColor, selectColor } from 'actions/index';
 
 
 const styles = {
-  container: {
+  page: {
+    padding: '1em',
     display: 'flex',
     flexDirection: 'column',
-    flexWrap: 'nowrap'
+    flexWrap: 'nowrap',
+    alignItems: 'flex-start'
   },
   formContainer: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    border: 'thin solid red',
-    marginLeft: '1em',
-    marginRight: '1em'
+    justifyContent: 'flex-start'
   },
   form: {
-    flex: '0 1 auto'
+    flex: 1,
+    maxWidth: '14em',
   }
 };
 
@@ -29,6 +31,7 @@ class Designer extends Component {
     this.changeValue = this.changeValue.bind(this);
     this.onAdd = this.onAdd.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
   shouldComponentUpdate() {
     return true;
@@ -39,27 +42,36 @@ class Designer extends Component {
   handleRemove(idx) {
     this.props.removeColor(idx);
   }
+  handleSelect(idx) {
+    this.props.selectColor(idx);
+  }
   onAdd() {
     this.props.addColor();
   }
   renderPalette () {
     return this.props.palette.map((item, idx) => {
+      const selectedStyle = {
+        border: '2px solid',
+        borderColor: (this.props.selected == idx) ? '#333333' : 'rgba(0,0,0,0.01)'
+      };
       return (
-          <li style={styles.form} key={idx}>
+          <li style={merge(styles.form, selectedStyle)} key={idx}>
             <ColorForm  key={idx}
                         colorObj={item.colorObj}
                         hexInput={item.hexInput}
                         colornameInput={item.colornameInput}
                         idx={idx}
-                        onChange={this.changeValue}
-                        onRemove={this.handleRemove} />
+                        handleChange={this.changeValue}
+                        handleRemove={this.handleRemove}
+                        handleSelect={this.handleSelect}
+                        isSelected={(this.props.selected == idx)}/>
           </li>
       );
     });
   }
   render() {
     return (
-      <div style={styles.container}>
+      <div style={styles.page}>
         <h3>Palette Designer</h3>
         <ul style={styles.formContainer}>
         {this.renderPalette()}
@@ -70,10 +82,11 @@ class Designer extends Component {
   }
 }
 function mapStateToProps(state) {
-  console.log('palette:', state.palette.palette);
+  console.log('palette:', state.palette.palette, 'selected:', state.palette.selected);
   return {
-    palette: state.palette.palette
+    palette: state.palette.palette,
+    selected: state.palette.selected
   };
 }
 
-export default connect(mapStateToProps, {addColor, alterColor, removeColor})(Designer);
+export default connect(mapStateToProps, {addColor, alterColor, removeColor, selectColor})(Designer);

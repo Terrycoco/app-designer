@@ -5,7 +5,7 @@ const styles = {
   container: {
     display: 'flex',
     flexDirection: 'row',
-    fontSize: '.8em',
+    fontSize: '.65em',
     justifyContent: 'stretch'
   },
   channel: {
@@ -66,7 +66,7 @@ class Slider extends Component {
     }
     let colorstyle = {
       background: clr,
-      color: this.props.colorObj.textColor 
+      color: this.props.colorObj.textColor
     };
     return (
       <div style={styles.container}>

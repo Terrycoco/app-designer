@@ -51,6 +51,14 @@ export function alterColor(idx, channel, newval) {
   };
 }
 
+export const SELECT_COLOR = 'SELECT_COLOR';
+export function selectColor(idx) {
+  return {
+    type: SELECT_COLOR,
+    payload: idx
+  };
+}
+
 export const SET_BACKGROUND = "SET_BACKGROUND";
 export function setBackground(idx, colorstring) {
   return {

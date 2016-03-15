@@ -3,9 +3,11 @@
 A starter project for React, Redux & Webpack
 
 ###Also Includes###
-react-router
-palette designer
-Example Files
+* Testing with Mocha & Chai
+* react-router
+* palette designer
+* Example Files
+
 
 ###Getting Started###
 

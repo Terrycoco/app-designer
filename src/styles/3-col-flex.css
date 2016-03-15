@@ -1,0 +1,27 @@
+.row-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.col-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.rest {
+  flex: 1;
+}
+
+.third {
+  flex: 0 0 33%;
+}
+
+.full {
+  flex: 0 0 100%;
+}
+
+.quarter {
+  flex: 0 0 25%;
+}

@@ -1,0 +1,25 @@
+  :root {
+    --content-bg: #eee;
+    --content-text: #111111;
+    --primary: #2ABB9B;
+    --primary-tint: #c1D8d5;
+    --primary-shade: #16A085;
+    --secondary: white;
+    --secondary-text: #111111;
+    --accent: white;
+    --accent-tint: #111111;
+    --accent-shade:
+  }
+
+html {
+  background-color: Window;
+}
+
+p {
+  color: WindowText;
+  opacity: 0.87;
+}
+
+h1, h2, h3 {
+  color: var(--primary);
+}

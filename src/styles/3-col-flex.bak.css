@@ -1,0 +1,78 @@
+/* Responsive 1 to 2 to 3 col layout
+ALL LAYOUT DECISIONS FOR CONTAINING BLOCKS HERE */
+
+/*small 1-col */
+  #page {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+  }
+  #content-container {
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+  }
+  #main {
+    order: 1;
+  }
+  #side2 {
+    order: 2;
+  }
+  #side1 {
+    order: 3;
+  }
+
+
+/*medium 2 col */
+@media only screen and (min-width: 600px) {
+  #page {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  #content-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  #main {
+    order: 1;
+    flex: 1;
+    flex-basis: auto;
+  }
+  #side1 {
+    order: 2;
+    flex: 0 0 20%;
+  }
+  #side2 {
+    order: 3;
+  }
+}
+
+
+/*large */
+@media only screen and (min-width: 768px) {
+  #page {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  #content-container {
+    display: flex;
+    flex-direction: row;
+    align-items: space-between;
+  }
+
+  #main {
+    order: 1;
+  }
+
+  #side1 {
+    order: 2;
+  }
+
+  #side2 {
+    order: 3;
+  }
+}

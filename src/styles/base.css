@@ -1,0 +1,46 @@
+/* base styles are styles at the ELEMENT level
+ INCLUDE:
+   overall typeography,
+ NOT INCLUDED:
+  layout decisions
+  spacing between elements
+  classes or id styling
+*/
+
+
+@import url("colors.css");
+
+
+html {
+  /*background: url(../images/gray_noise.png) repeat;*/
+  font-size: 24px;
+  font-weight: 100;
+  line-height: 1.5;
+  /*color: var(--main-fg-color);*/
+
+}
+
+
+h1, h2, h3, h4, h5, h6, p, ul, ol {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: .5rem;
+  line-height: 1.1;
+}
+
+/* medium */
+@media (max-width: 900px) {
+  html{
+    font-size: 20px;
+  }
+}
+
+/* small */
+@media (max-width: 500px) {
+  html {
+    font-size: 16px; /* never go below 16px!!!!*/
+  }
+}

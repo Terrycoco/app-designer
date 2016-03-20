@@ -4,23 +4,21 @@ import colors from 'styles/colors';
 
 const styles = {
   me: {
-    alignSelf: 'flex-start',
-    flex: '0',
-    width: '100%',
-    order: '0'
+    flex: '1 1 100%'
   }
 };
 
 
-class Header extends Component {
+class Main extends Component {
   render() {
     return (
-      <header style={merge(colors.header, styles.me)}>
+      <div style={merge(colors.main, styles.me)}>
         {this.props.children}
-      </header>
+      </div>
     );
   }
 
 }
 
-export default Header;
+
+export default Main;

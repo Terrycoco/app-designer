@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setWindowSize, toggleBorders } from 'actions/index';
+import colors from 'styles/colors';
+import {merge} from 'utils/shared';
+import StickyFooter from 'components/StickyFooter';
+import Header from 'components/Header';
+import Main from 'components/Main';
+
+
+const styles = {
+  me: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch'
+  }
+};
+
+
 //put anything you want displayed on ALL pages here
-
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -26,12 +42,8 @@ class App extends Component {
 
   render() {
     return  (
-      <div>
+      <div style={merge(styles.me)} >
         {this.props.children}
-        <div id="toolbox" >
-           <br/>Window Size is: {this.props.winSize} (Change in actions/index)
-           <br/><button onClick={this.handleBorders}>Borders</button>
-       </div>
       </div>
     );
   }

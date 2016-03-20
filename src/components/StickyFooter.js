@@ -4,23 +4,23 @@ import colors from 'styles/colors';
 
 const styles = {
   me: {
-    alignSelf: 'flex-start',
-    flex: '0',
+    alignSelf: 'flex-end',
     width: '100%',
-    order: '0'
+    order: '99'
   }
 };
 
 
-class Header extends Component {
+class StickyFooter extends Component {
   render() {
     return (
-      <header style={merge(colors.header, styles.me)}>
+      <footer style={merge(colors.footer, styles.me)}>
         {this.props.children}
-      </header>
+      </footer>
     );
   }
 
 }
 
-export default Header;
+
+export default StickyFooter;

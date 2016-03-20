@@ -52,10 +52,12 @@ export function alterColor(idx, channel, newval) {
 }
 
 export const SELECT_COLOR = 'SELECT_COLOR';
-export function selectColor(idx) {
+
+export function selectColor(idx, selectedId) {
+  console.log('action! selectColor', selectedId);
   return {
     type: SELECT_COLOR,
-    payload: idx
+    payload: {idx: idx, selectedId: selectedId}
   };
 }
 
@@ -81,4 +83,28 @@ export function setBackground(idx, colorstring) {
     type: ALTER_COLOR,
     payload: {idx: idx, channel: backgroundColor, newval: colorstring}
   };
+}
+
+export const LINK_COLOR = "LINK_COLOR";
+export function linkColor(linkIdx, attr) {
+  return {
+    type: LINK_COLOR,
+    payload: { linkIdx: linkIdx, attr: attr }
+  };
+}
+
+export const APPLY_STYLE = "APPLY_STYLE";
+export function applyStyle(el, attr, val) {
+  return {
+    type: APPLY_STYLE,
+    payload: {el: el, attr: attr, val: val}
+  }
+}
+
+export const CLEAR_LINKS = "CLEAR_LINKS";
+export function clearLinks() {
+  return {
+    type: CLEAR_LINKS,
+    payload: null
+  }
 }

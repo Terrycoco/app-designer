@@ -1,4 +1,6 @@
   :root {
+    --default-bg: #eee;
+    --default-fg: #000;
     --content-bg: #eee;
     --content-text: #111111;
     --primary: #2ABB9B;
@@ -11,15 +13,21 @@
     --accent-shade:
   }
 
-html {
-  background-color: Window;
+html, body {
+  background-color: var(--default-bg);
+  color: var(--default-fg);
+  border: var(--default-bd);
 }
 
-p {
-  color: WindowText;
-  opacity: 0.87;
+section {
+  background-color: inherit;
 }
 
 h1, h2, h3 {
   color: var(--primary);
+  background-color: 'transparent';
+}
+
+thead {
+  background-color: var(--primary-shade);
 }

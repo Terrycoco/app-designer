@@ -35,11 +35,12 @@ class Color {
     this.blue = this.rgb[2];
     this.alpha = a || 1;
     this.hex = colorString.to.hex(this.rgb);
+    this.colorname = colorString.to.keyword(this.rgb) || '';
     this.backgroundColor = 'white'; //default is white
     this.light = this.calcLight(this.red, this.green, this.blue);
     this.textColor = this.setTextColor();
     this.setChannel = this.setChannel.bind(this);
-    this.colorname = colorString.to.keyword(this.rgb) || '';
+    this.rgbaStr = 'rgba(' + this.red + ',' + this.green + ',' + this.blue + ',' + this.alpha +')';
     this.setBackgroundColor = this.setBackgroundColor.bind(this);
     this.clone = this.clone.bind(this);
  }
@@ -51,6 +52,7 @@ class Color {
   }
 
   setTextColor() {
+    console.log('callingtextcolor', this.colorname, this.alpha, this.light, this.backgroundColor)
     if (this.alpha >= 0.5) {
       return (this.light >= 128) ? 'black' : 'white';
     } else {
@@ -72,13 +74,14 @@ class Color {
       case "hex": {
         let newclr = new Color(val);
         newclr.backgroundColor = bg;
-        newclr.textColor = this.setTextColor();
+        newclr.textColor = newclr.setTextColor();
         return newclr;
       }
       case "colorname": {
+        console.log('currentbgis:',bg, this.light);
         let newclr = new Color(val);
         newclr.backgroundColor = bg;
-        newclr.textColor = this.setTextColor();
+        newclr.textColor = newclr.setTextColor();
         return newclr;
       }
       case "backgroundColor": {
@@ -87,7 +90,7 @@ class Color {
 
         if (clr.isValid) {
             newclr.backgroundColor = val;
-            newclr.textColor = this.setTextColor();
+            newclr.textColor = newclr.setTextColor();
         } else {
           newclr.backgroundColor = bg;
           newclr.textColor = this.setTextColor();

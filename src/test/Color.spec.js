@@ -1,4 +1,4 @@
-import Color from 'utils/Color';
+import Color from 'lib/Color';
 import {typeOf} from 'utils/shared';
 
 describe('color object', () => {
@@ -7,11 +7,11 @@ describe('color object', () => {
   //   let rgb =  clr.rgb;
   //   expect(clr instanceof Color).to.equal(true);
   // });
-  it('returns a color object from rgb array', () => {
-    let clr = new Color([255, 255, 255, .5]);
-    let rgb =  clr.rgb;
-    expect(rgb).to.eql([255, 255, 255, .5]);
-  });
+  // it('returns a color object from rgb array', () => {
+  //   let clr = new Color([255, 255, 255, .5]);
+  //   let rgb =  clr.rgb;
+  //   expect(rgb).to.eql([255, 255, 255, .5]);
+  // });
   // it('returns the light value', () => {
   //   let clr = new Color(255, 255, 255, .40);
   //   clr.setBackgroundColor('black');
@@ -88,5 +88,10 @@ describe('color object', () => {
   //   let newclr = clr.setChannel("alpha", .25);
   //   expect(newclr.alpha).to.equal(.25);
   // });
+  it('returns proper text color for yellow', () => {
+    let clr = new Color('black');
+    let newclr = clr.setChannel('colorname', 'yellow');
+    expect(newclr.textColor).to.equal('black');
+  });
 
 });

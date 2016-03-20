@@ -46,14 +46,15 @@ module.exports = {
   },
   resolve: {
     alias: {
-      components: path.resolve( __dirname, 'src', 'components'),
-      reducers: path.resolve( __dirname, 'src', 'reducers'),
-      actions: path.resolve( __dirname, 'src', 'actions'),
-      styles: path.resolve(__dirname,'src','styles'),
-      images: path.resolve(__dirname,'src','images'),
-      pages: path.resolve(__dirname,'src','pages'),
-      utils: path.resolve(__dirname, 'src','utils'),
-      examples: path.resolve(__dirname,'src','examples')
+      components:   path.resolve(__dirname, 'src', 'components'),
+      reducers:     path.resolve(__dirname, 'src', 'reducers'),
+      actions:      path.resolve(__dirname, 'src', 'actions'),
+      styles:       path.resolve(__dirname, 'src', 'styles'),
+      images:       path.resolve(__dirname, 'src', 'images'),
+      pages:        path.resolve(__dirname, 'src', 'pages'),
+      lib:          path.resolve(__dirname, 'src', 'lib'),
+      utils:        path.resolve(__dirname, 'src', 'utils'),
+      examples:     path.resolve(__dirname, 'src', 'examples')
     },
     extensions: ['','.js', '.jsx', 'css']
   },

@@ -8,18 +8,21 @@
 */
 
 
-@import url("colors.css");
+/*@import url("colors.css");*/
 
 
 html {
-  /*background: url(../images/gray_noise.png) repeat;*/
   font-size: 24px;
   font-weight: 100;
   line-height: 1.5;
   /*color: var(--main-fg-color);*/
-
+  font-family: 'Verdana, Geneva, Arial, Helvetica, sans-serif';
 }
 
+th, td {
+  font-size: .9em;
+  line-height: '1.6'
+}
 
 h1, h2, h3, h4, h5, h6, p, ul, ol {
   margin-top: 0;

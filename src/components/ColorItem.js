@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { connect} from 'react-redux';
-import Color from 'utils/Color';
+import Color from 'lib/color';
 import {merge} from 'utils/shared';
 import styles from 'components/ColorItem.style';
 import {removeColor, alterColor} from 'actions/index';

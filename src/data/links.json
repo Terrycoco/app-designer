@@ -1,0 +1,19 @@
+[
+  { "element": "body"},
+  { "element": "header"},
+  { "element": "footer"},
+  { "element": "section"},
+  { "element": "aside"},
+  { "element": "p"},
+  { "element": "h1"},
+  { "element": "h2"},
+  { "element": "h3"},
+  { "element": "h4"},
+  { "element": "h5"},
+  { "element": "h6"},
+  { "element": "table"},
+  { "element": "tr"},
+  { "element": "th"},
+  { "element": "td"},
+  {"element": "button"}
+]

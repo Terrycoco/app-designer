@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import Slider from 'components/Slider';
 import Utils, { merge } from 'utils/shared';
-
+import Transition from 'react-motion-ui-pack';
+import {spring} from 'react-motion';
 
 const styles = {
   container: {
+    flex: '1 0 20%',
     display: 'flex',
     flexDirection: 'column',
-    width:'auto',
     wrap: 'nowrap',
-    backgroundColor: 'white',
     fontFamily: 'Verdana, Arial, sans-serif'
   },
   colorBlock:{
+    flex: '1',
     minHeight: '10em',
     display: 'flex',
     flexDirection: 'column',
@@ -46,9 +47,9 @@ const styles = {
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'stretch',
-      alignItems: 'center'
-
+      alignItems: 'center',
       },
+
             label: {
               fontSize: '.6em',
               marginRight: '.5em',
@@ -56,7 +57,7 @@ const styles = {
             },
             input: {
               fontSize: '.7em',
-              width: '98px',
+              width: '30%',
               backgroundColor: 'white',
               color: 'black',
               textAlign: 'center'
@@ -89,7 +90,7 @@ class ColorForm extends Component {
 
   }
   callSelect(e) {
-    this.props.handleSelect(this.props.idx);
+    this.props.handleSelect(this.props.idx, this.props.unique);
   }
   callRemove(e) {
     this.props.handleRemove(this.props.idx);
@@ -106,23 +107,29 @@ class ColorForm extends Component {
   shouldComponentUpdate() {
     return true;
   }
-  componentWillReceiveProps(nextProps) {
+
+  fetchSliderStyles() {
+    if (this.props.isLocked) {
+      return styles.sliderLocked;
+    } else {
+      return styles.sliderUnlocked;
+    }
   }
   render() {
       let alphanew = (this.props.colorObj.alpha - 0.25).toFixed(3);
       let bg = `rgba(${this.props.colorObj.red}, ${this.props.colorObj.green}, ${this.props.colorObj.blue}, ${this.props.colorObj.alpha})`;
-      let textcolor =this.props.colorObj.textColor;
+      let textcolor = this.props.colorObj.textColor;
       let menubar =  `rgba(${this.props.colorObj.red}, ${this.props.colorObj.green}, ${this.props.colorObj.blue}, ${alphanew})`;
+      let selected = this.props.isSelected ? {border: '2px solid black'} : {border: '2px solid white'};
     return (
-      <div style={styles.container}>
-        <div style={merge(styles.colorBlock, {background: bg, color: textcolor})} onClick={this.callSelect}>
+      <div style={merge(styles.container)}>
+        <div style={merge(styles.colorBlock, {background: bg, color: textcolor}, selected)} onClick={this.callSelect}>
               <div style={merge(styles.swatchMenu, {background: menubar, color: textcolor})}>
-              <span style={merge(styles.clone, {color: textcolor})}
-                    className={(this.props.isLocked) ? "fa fa-lock" : "fa fa-unlock"}
-                    onClick={this.callLock}></span>
-                  <span style={styles.swatchTitle}>Color {this.props.idx}</span>
-
-                  <span style={merge(styles.X, {color: textcolor})} onClick={this.callRemove} >x</span>
+                <span style={merge(styles.clone, {color: textcolor})}
+                      className={(this.props.isLocked) ? "fa fa-lock" : "fa fa-unlock"}
+                      onClick={this.callLock}></span>
+                <span style={styles.swatchTitle}>{this.props.unique}</span>
+                <span style={merge(styles.X, {color: textcolor})} onClick={this.callRemove} >x</span>
               </div>
               <div style={merge(styles.inputBlock, {background: menubar, color: textcolor})} >
                     <label style={styles.label}>Hex</label>
@@ -148,14 +155,26 @@ class ColorForm extends Component {
                           onClick={this.callClone}></span>
                 </div>
           </div>
-        <div>
-           <Slider name="red" key={this.props.idx+'r'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.red} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
-           <Slider name="green" key={this.props.idx+'g'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.green} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
-           <Slider name="blue" key={this.props.idx+'b'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.blue} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
-           <Slider name="light" key={this.props.idx+'l'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.light} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
-          <Slider name="alpha" key={this.props.idx+'a'} idx={this.props.idx} min=".001" max="1" step=".001" value={this.props.colorObj.alpha} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
-        </div>
+        <Transition component={false}
+                    enter={{
+                      opacity: 1,
+                      translateY: spring(0, {stiffness: 1000, damping:100})
+                    }}
+                    leave={{
+                      opacity: 0,
+                      translateY: -200
+                    }}>
+          {!this.props.isLocked &&
+                <div key={this.props.idx+'s'}>
+                   <Slider name="red" key={this.props.idx+'r'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.red} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
+                   <Slider name="green" key={this.props.idx+'g'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.green} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
+                   <Slider name="blue" key={this.props.idx+'b'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.blue} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
+                   <Slider name="light" key={this.props.idx+'l'} idx={this.props.idx} min="0" max="255" step="1" value={this.props.colorObj.light} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
+                  <Slider name="alpha" key={this.props.idx+'a'} idx={this.props.idx} min=".001" max="1" step=".001" value={this.props.colorObj.alpha} onChange={this.props.handleChange} colorObj={this.props.colorObj}/>
+                </div>
+          }
 
+        </Transition>
       </div>
 
     );

@@ -9,8 +9,12 @@ const styles = {
     justifyContent: 'stretch'
   },
   channel: {
+    display: 'flex',
     minWidth: '3em',
-    textAlign: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    borderBottom: '1px solid grey',
+    alignItems: 'center'
   },
   slider: {
     flex: 1,
@@ -39,6 +43,7 @@ class Slider extends Component {
 
  render() {
     let clr = "";
+    let r,g,b,a;
     switch(this.props.name) {
       case "red": {
         clr = 'linear-gradient(to right, black, #ff0000)';
